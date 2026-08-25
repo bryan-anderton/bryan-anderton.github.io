@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing Samples — Bryan Anderton</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="sidebar__brand">portfolio/</div>
+    <p class="sidebar__name">Bryan Anderton</p>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="achievements.html">Achievements</a></li>
+        <li><a href="samples.html" class="is-active">Writing samples</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar__footer">
+      <div>Last updated: 2026-08-25</div>
+      <div><a href="mailto:banderton81@gmail.com">banderton81@gmail.com</a></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="content">
+      <div class="file-tab"><span class="file-tab__dot"></span>samples.md</div>
+      <div class="doc-header">
+        <div class="doc-header__meta">
+          <span class="badge">6 entries</span>
+        </div>
+        <h1>Writing samples</h1>
+        <p>
+          Each entry links out to a PDF or a live doc. The colored bar marks
+          rough audience level — beginner, intermediate, or advanced.
+        </p>
+      </div>
+
+      <section>
+        <h2>Samples</h2>
+
+        <div class="sample" data-level="beginner">
+          <div class="sample__top">
+            <span class="sample__title">Replace: Getting Started Guide</span>
+            <span class="sample__tag">user guide · beginner</span>
+          </div>
+          <p class="sample__desc">
+            One or two sentences on what this doc covers and who it's for.
+          </p>
+          <a class="sample__link" href="assets/samples/sample-1.pdf">→ view sample</a>
+        </div>
+
+        <div class="sample" data-level="intermediate">
+          <div class="sample__top">
+            <span class="sample__title">Replace: API Reference Section</span>
+            <span class="sample__tag">API reference · intermediate</span>
+          </div>
+          <p class="sample__desc">
+            One or two sentences of context — the product, the endpoint(s) covered.
+          </p>
+          <a class="sample__link" href="assets/samples/sample-2.pdf">→ view sample</a>
+        </div>
+
+        <div class="sample" data-level="advanced">
+          <div class="sample__top">
+            <span class="sample__title">Replace: Architecture / Integration Guide</span>
+            <span class="sample__tag">technical guide · advanced</span>
+          </div>
+          <p class="sample__desc">
+            One or two sentences of context — the system, the audience (e.g. platform engineers).
+          </p>
+          <a class="sample__link" href="assets/samples/sample-3.pdf">→ view sample</a>
+        </div>
+
+        <!-- Duplicate a .sample block above for each additional writing sample. -->
+
+      </section>
+
+      <section>
+        <h2 style="color: var(--accent-2);">Note on hosting samples</h2>
+        <p class="muted">
+          Drop PDFs into <code>assets/samples/</code> and link to them directly,
+          or link out to a live published doc if one is already public. Redact
+          anything proprietary or covered by an NDA before publishing.
+        </p>
+      </section>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>
