@@ -1,10 +1,5 @@
 /* ============================================================
    Portfolio site for a technical writer.
-   Design concept: the site reads like a well-maintained docs
-   site — sidebar nav, a rendered-markdown "file tab" header on
-   every page, and writing samples presented as changelog-style
-   entries with an audience-level indicator bar. This mirrors
-   the actual medium a technical writer works in every day.
    ============================================================ */
 
 :root {
@@ -277,15 +272,318 @@ p { color: var(--ink); }
 .sample[data-level="advanced"] { border-left-color: var(--red); }
 
 .sample__top {
+  display: flex;@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #fafaf9;
+  --bg-alt: #f1effc;
+  --panel: #ffffff;
+  --ink: #17181c;
+  --ink-muted: #5b5f6b;
+
+  --sidebar-bg: #211f52;      /* bold deep indigo — the "stand out" move */
+  --sidebar-bg-raised: #2c2a68;
+  --sidebar-ink: #f5f3ff;
+  --sidebar-ink-muted: #b3aee0;
+
+  --accent: #ff5a36;          /* warm coral — the single accent, carries the warmth */
+  --accent-ink: #ffffff;
+  --accent-2: #e08a1e;        /* gold, used sparingly for secondary labels */
+
+  --line: #e7e5ef;
+  --green: #2f9e68;           /* "beginner" level */
+  --amber: #d98f2b;           /* "intermediate" level */
+  --red: #c24545;             /* "advanced" level */
+
+  --font-display: 'Space Grotesk', var(--font-body);
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  --sidebar-w: 250px;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+a { color: var(--accent); text-decoration: none; font-weight: 500; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- layout shell ---------- */
+
+.shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  padding: 32px 22px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar__brand {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--sidebar-ink-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.sidebar__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0 0 28px 0;
+  color: var(--sidebar-ink);
+  letter-spacing: -0.01em;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar nav li { margin-bottom: 3px; }
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: var(--sidebar-ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.sidebar nav a::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sidebar-ink-muted);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.sidebar nav a:hover {
+  background: var(--sidebar-bg-raised);
+  color: var(--sidebar-ink);
+}
+
+.sidebar nav a.is-active {
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.sidebar nav a.is-active::before { background: var(--accent-ink); opacity: 1; }
+
+.sidebar__footer {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--sidebar-ink-muted);
+}
+
+.sidebar__footer a { color: var(--sidebar-ink-muted); font-weight: 400; }
+.sidebar__footer a:hover { color: var(--sidebar-ink); }
+
+/* ---------- main content ---------- */
+
+main {
+  flex: 1;
+  min-width: 0;
+  padding: 0 44px 80px;
+}
+
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* file-tab header — the signature element.
+   Every page opens like a rendered markdown file. The bold move
+   here is the thick coral top-stripe on the doc-header below —
+   loud enough to feel modern, contained enough to feel calm. */
+
+.file-tab {
+  margin-top: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.file-tab__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.doc-header {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) var(--radius);
+  padding: 34px 38px 30px;
+  margin-bottom: 44px;
+}
+
+.doc-header__meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 16px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.doc-header h1 {
+  font-family: var(--font-display);
+  margin: 0 0 12px;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.doc-header p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 16.5px;
+  max-width: 60ch;
+}
+
+.badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--bg-alt);
+  color: #4c3f9e;
+  border: 1px solid var(--line);
+}
+
+/* ---------- prose sections ---------- */
+
+section { margin-bottom: 48px; }
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: var(--accent);
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 9px;
+  margin: 0 0 20px;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+
+p { color: var(--ink); }
+.muted { color: var(--ink-muted); }
+
+/* ---------- achievement list ---------- */
+
+.achievement {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.achievement:last-child { border-bottom: none; }
+
+.achievement__year {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--accent-2);
+  flex-shrink: 0;
+  width: 52px;
+  padding-top: 3px;
+}
+
+.achievement__body h3 { margin-bottom: 4px; }
+.achievement__body p { margin: 0; font-size: 14.5px; color: var(--ink-muted); }
+
+/* ---------- writing samples: changelog-style cards ---------- */
+
+.sample {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--green);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 16px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sample:hover {
+  box-shadow: 0 4px 16px rgba(33, 31, 82, 0.08);
+}
+
+.sample[data-level="intermediate"] { border-left-color: var(--amber); }
+.sample[data-level="advanced"] { border-left-color: var(--red); }
+
+.sample__top {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
 }
 
-.sample__title { font-weight: 600; font-size: 16px; }
+.sample__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16.5px;
+  color: var(--ink);
+}
 
 .sample__tag {
   font-family: var(--font-mono);
@@ -302,6 +600,7 @@ p { color: var(--ink); }
 .sample__link {
   font-family: var(--font-mono);
   font-size: 13px;
+  font-weight: 500;
 }
 
 /* ---------- contact / links ---------- */
@@ -316,14 +615,20 @@ p { color: var(--ink); }
 .contact-row a {
   font-family: var(--font-mono);
   font-size: 13px;
-  padding: 6px 12px;
+  font-weight: 500;
+  padding: 8px 14px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 20px;
   background: var(--panel);
   color: var(--ink);
 }
 
-.contact-row a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.contact-row a:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  text-decoration: none;
+}
 
 /* ---------- responsive ---------- */
 
@@ -333,16 +638,16 @@ p { color: var(--ink); }
     width: 100%;
     height: auto;
     position: relative;
-    border-right: none;
-    border-bottom: 1px solid var(--line);
-    padding: 20px;
+    padding: 22px 20px;
   }
   .sidebar nav ul { display: flex; flex-wrap: wrap; gap: 4px; }
   .sidebar__footer { display: none; }
   main { padding: 0 20px 60px; }
-  .doc-header { padding: 24px 20px; }
+  .doc-header { padding: 26px 22px; }
+  .doc-header h1 { font-size: 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .sample { transition: none; }
 }
